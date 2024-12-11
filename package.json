@@ -4,9 +4,6 @@
   "description": "Solutions for Advent of Code",
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc",
-    "dev": "node --watch -r ts-node/register src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
   "keywords": [],
@@ -16,13 +13,14 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1",
     "@types/lodash": "^4.17.13",
+    "@types/node": "^22.10.1",
     "husky": "9.1.6",
     "lint-staged": "15.2.10",
     "prettier": "3.3.3",
     "prettier-plugin-organize-imports": "3.2.4",
     "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
     "typescript": "^5.7.2"
   },
   "prettier": {
