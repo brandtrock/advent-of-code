@@ -1,76 +1,95 @@
 import { readFileSync } from 'fs';
 
-const file = readFileSync(`${__dirname}/input-test.txt`);
+const file = readFileSync(`${__dirname}/input.txt`);
 const lines = file.toString().split('\n');
-const matrix = lines.map((line) => line.split(''));
 
-/* MATRIX with test input (input-test.txt):
-[ 
-  [ 'M', 'M', 'M', 'S', 'X', 'X', 'M', 'A', 'S', 'M' ], 
-  [ 'M', 'S', 'A', 'M', 'X', 'M', 'S', 'M', 'S', 'A' ], 
-  [ 'A', 'M', 'X', 'S', 'X', 'M', 'A', 'A', 'M', 'M' ], 
-  [ 'M', 'S', 'A', 'M', 'A', 'S', 'M', 'S', 'M', 'X' ], 
-  [ 'X', 'M', 'A', 'S', 'A', 'M', 'X', 'A', 'M', 'M' ], 
-  [ 'X', 'X', 'A', 'M', 'M', 'X', 'X', 'A', 'M', 'A' ], 
-  [ 'S', 'M', 'S', 'M', 'S', 'A', 'S', 'X', 'S', 'S' ], 
-  [ 'S', 'A', 'X', 'A', 'M', 'A', 'S', 'A', 'A', 'A' ], 
-  [ 'M', 'A', 'M', 'M', 'M', 'X', 'M', 'M', 'M', 'M' ], 
-  [ 'M', 'X', 'M', 'X', 'A', 'X', 'M', 'A', 'S', 'X' ] 
-]
-*/
+// const directions = [
+//   [0, 1], // Right
+//   [1, 0], // Down
+//   [0, -1], // Left
+//   [-1, 0], // Up
+//   [1, 1], // Down Right
+//   [1, -1], // Down Left
+//   [-1, 1], // Up Right
+//   [-1, -1], // Up Left
+// ];
 
-const xmas = 'XMAS';
-let count = 0;
+let total = 0;
 
-function checkXmas(matrix: string[][], row: number, col: number, index: number): boolean {
-  if (index === xmas.length) {
-    return true; // Found "XMAS"
-  }
+const directions = {
+  right: [
+    [0, 1],
+    [0, 2],
+    [0, 3],
+  ],
+  down: [
+    [1, 0],
+    [2, 0],
+    [3, 0],
+  ],
+  left: [
+    [0, -1],
+    [0, -2],
+    [0, -3],
+  ],
+  up: [
+    [-1, 0],
+    [-2, 0],
+    [-3, 0],
+  ],
+  downRight: [
+    [1, 1],
+    [2, 2],
+    [3, 3],
+  ],
+  downLeft: [
+    [1, -1],
+    [2, -2],
+    [3, -3],
+  ],
+  upRight: [
+    [-1, 1],
+    [-2, 2],
+    [-3, 3],
+  ],
+  upLeft: [
+    [-1, -1],
+    [-2, -2],
+    [-3, -3],
+  ],
+};
 
-  if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[row].length) {
-    return false; // Out of bounds
-  }
-
-  if (matrix[row][col] !== xmas[index]) {
-    return false; // Not the correct letter
-  }
-
-  // Check all directions
-  const directions = [
-    [0, 1], // Right
-    [1, 0], // Down
-    [0, -1], // Left
-    [-1, 0], // Up
-    [1, 1], // Down Right
-    [1, -1], // Down Left
-    [-1, 1], // Up Right
-    [-1, -1], // Up Left
-  ];
-
-  for (const direction of directions) {
-    const newRow = row + direction[0];
-    const newCol = col + direction[1];
-
-    if (checkXmas(matrix, newRow, newCol, index + 1)) {
-      return true;
+for (let x = 0; x < lines.length; x++) {
+  for (let y = 0; y < lines[x].length; y++) {
+    if (lines[x][y] === 'X') {
+      total += search(x, y);
     }
   }
-
-  return false;
 }
 
-function findXmas(matrix: string[][]): number {
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[i].length; j++) {
-      if (matrix[i][j] === xmas[0]) {
-        if (checkXmas(matrix, i, j, 0)) {
-          count++;
-        }
+function search(x: number, y: number): number {
+  let count = 0;
+  const word = 'XMAS';
+
+  for (const direction in directions) {
+    const steps = directions[direction];
+    let found = true;
+    for (let k = 0; k < steps.length; k++) {
+      const [dx, dy] = steps[k];
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx < 0 || nx >= lines.length || ny < 0 || ny >= lines[nx].length || lines[nx][ny] !== word[k + 1]) {
+        found = false;
+        break;
       }
+    }
+    if (found) {
+      count++;
     }
   }
 
   return count;
 }
 
-console.log(findXmas(matrix)); // should return 18 with test input
+console.log(total); // should return 18 with test input
+// 2370 is the answer with the real input

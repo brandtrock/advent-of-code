@@ -10,3 +10,15 @@
   [ 'M', 'A', 'M', 'M', 'M', 'X', 'M', 'M', 'M', 'M' ], 
   [ 'M', 'X', 'M', 'X', 'A', 'X', 'M', 'A', 'S', 'X' ] 
 ]
+
+# MMMSXXMASM
+# MSAMXMSMSA
+# AMXSXMAAMM
+# MSAMASMSMX
+# XMASAMXAMM
+# XXAMMXXAMA
+# SMSMSASXSS
+# SAXAMASAAA
+# MAMMMXMMMM
+# MXMXAXMASX
+# 2370
