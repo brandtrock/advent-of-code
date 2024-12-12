@@ -92,4 +92,3 @@ function search(x: number, y: number): number {
 }
 
 console.log(total); // should return 18 with test input
-// 2370 is the answer with the real input
